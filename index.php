@@ -1,25 +1,20 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Learning to use the FPDF library!</title>
-</head>
-
-<body>
-    <h1>Learning to use the FPDF library!</h1>
-</body>
-
-</html>
-
 <?php
 
 require "./fpdf186/fpdf.php";
+require "./StringUtil.php";
+require "./text.php";
 
-$pdfWriter = new FPDF();
+$pdfFile = new FPDF();
+$pdfFile->AddPage();
 
-$pdfWriter->SetFont("Arial");
-$pdfWriter->AddPage();
+$pdfFile->SetFont("Arial", '', 20);
+$pdfFile->Cell(0, 0, StringUtil::encodeUTF8("Darth Vader"), 0, 1, 'C');
+$pdfFile->Ln();
 
-
+$pdfFile->SetFont("Arial", '', 12);
+$pdfFile->MultiCell(0, 5, StringUtil::encodeUTF8("\n\n{$firstParagraph}"));
+$pdfFile->Ln();
+$pdfFile->MultiCell(0, 5, StringUtil::encodeUTF8($secondParagraph));
+$pdfFile->Ln();
+$pdfFile->Image("./vader.jpg", null, null, 150);
+$pdfFile->Output("F", "vader_summary.pdf");
